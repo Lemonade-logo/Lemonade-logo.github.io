@@ -14,52 +14,120 @@
     
     <script type="text/processing">
     
-      Ball[] ball;
-      void setup(){
-        size(700, 600);
-        frameRate(100);
-        ball = new Ball[100];
-        for(int i = 0; i < ball.length; i++){
-            ball[i] = new Ball();
-        }
-      }
-      void draw(){
-          background(155,0,0);
-            for(int i = 0; i < ball.length; i++){
-                ball[i].display();
-            }
-      }
-      class Ball{
-          float x;
-          float y;
-          float Vx;
-          float Vy;
-          float r,g,b,o;
-          float d;
-          Ball(){
-              x = random(width);
-              y = random(height);
-              Vx = random(-5,5);
-              Vy = random(-5,5);
-              r = random(255);
-              g = random(255);
-              b = random(255);
-              o = random(255);
-              d = random(30) + 15;
-          }
-          void display(){
-              fill(r,g,b,o);
-              ellipse(x,y,d,d);
-              x += Vx;
-              y += Vy;
-              if(x > width || x < 0){
-                  Vx *= -1;
-              }
-              if(y > height || y < 0){
-                  Vy *= -1;
-              }
-          }
-    }
+    void setup()
+{
+  size(800,620);
+  gap = 231;
+  score = 69;
+  bg = loadImage("./img/bg.png");
+  kirb = loadImage("./img/kirb.png");
+  botPipe = loadImage("./img/pipe2.png");
+  topPipe = loadImage("./img/pipe.png");
+  kx = 100;
+  ky = 50;
+  g = 1; //Gravity == Speed of downward acceleration
+  pipeX = new int[5];  //[0,0,0,0]
+  pipeY = new int[pipeX.length];
+  //POPULATE THE ARRAY WITH VALUES
+  for(int i = 0; i < pipeX.length; i++)
+  {
+    pipeX[i] = width + 200*i;
+    pipeY[i] = (int)random(-350, 0);
+  } 
+  gameState = -1;
+}
+
+//MAIN GAME LOOP
+void draw()
+{
+  if(gameState == -1)
+  {
+    bigOlResetButton();
+  } else if(gameState==0)
+  {
+    setBg();
+    setPipes();
+    kirb();  
+    points();
+  }
+  else
+  {
+    text("YOU LOSE, TRY AGAIN?", 20,100);  
+  }
+}
+
+
+void bigOlResetButton()
+{
+  image(bg,0,0);
+  text("kirb",300,300);
+  if(mousePressed) {
+    ky = height/2;
+    gameState = 0;
+  }
+}
+
+void setPipes()
+{
+  //Move the Pipes
+  for(int i = 0; i < pipeX.length; i++)
+  {
+   image(topPipe, pipeX[i], pipeY[i]);
+   image(botPipe, pipeX[i], pipeY[i] + 480);
+   pipeX[i]-= 2;
+   if(pipeX[i] < -200)
+   {
+     pipeX[i] = width;  
+   } 
+   if(kx > (pipeX[i]-kirb.width) && kx < pipeX[i] + topPipe.width)
+   {
+     if(!(ky > pipeY[i] + topPipe.height && ky < pipeY[i] + (topPipe.height + gap)))
+     {
+       gameState = 1;
+     } 
+     else if (kx == pipeX[i] || kx == pipeX[i] + 1)
+     {
+       score = score + 1;
+     }
+   }
+  }  
+}
+
+void points() {
+  fill(0);
+  text("Score: " + str(score), width = 170, 40);
+  
+}
+void kirb()
+{
+   image(kirb, kx, ky);
+   ky = ky + Vky;
+   Vky = Vky + g;  
+   if(ky > height || ky < 0)
+   {
+     gameState = 1;
+   }
+}
+
+void mousePressed()
+{
+   Vky = -15;
+   if(gameState==1) {
+     bigOlResetButton();
+   }
+}
+
+
+void setBg()
+{
+  image(bg, bgx, bgy);
+  image(bg, bgx + bg.width, bgy);
+  bgx--;
+  if(bgx < -bg.width)
+  {
+     bgx = 0; //RESET images to starting position 
+  }  
+}
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
     
