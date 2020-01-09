@@ -14,15 +14,28 @@
     
     <script type="text/processing">
     
-    void setup()
+    /* FLAPPY BIRD IN PROCESSING
+ * This goes goes with the 5th video in my Flappy Bird Tutorial
+ * Author: Eowyn Gooding
+ * Date: 1/2/2020
+ */
+
+PImage bg, kirb, topPipe, botPipe, start; 
+int bgx, bgy, kx, ky, g, Vky;
+int[] pipeX, pipeY; //DECLARE two arrays 
+int gameState, gap, score;
+
+//ONE TIME
+void setup()
 {
-  size(800,620);
+  size(600,600);
   gap = 231;
   score = 69;
   bg = loadImage("./img/bg.png");
   kirb = loadImage("./img/kirb.png");
   botPipe = loadImage("./img/pipe2.png");
   topPipe = loadImage("./img/pipe.png");
+  start = loadImage("./img/start.png");
   kx = 100;
   ky = 50;
   g = 1; //Gravity == Speed of downward acceleration
@@ -59,8 +72,7 @@ void draw()
 
 void bigOlResetButton()
 {
-  image(bg,0,0);
-  text("kirb",300,300);
+  image(start,0,0);
   if(mousePressed) {
     ky = height/2;
     gameState = 0;
@@ -112,9 +124,6 @@ void kirb()
 void mousePressed()
 {
    Vky = -15;
-   if(gameState==1) {
-     bigOlResetButton();
-   }
 }
 
 
