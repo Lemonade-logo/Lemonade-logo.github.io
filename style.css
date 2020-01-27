@@ -17,11 +17,11 @@ a {
   padding:10px;
   background-color:blue;
 }
-h1 [
+h1 {
   text-align:center:
   text-size:45px;
 }
 .game {
-  height:50%;
-  width:50%;
+  height:400px;
+  width:400px;
 }
