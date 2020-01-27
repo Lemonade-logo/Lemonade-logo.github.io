@@ -1,5 +1,6 @@
 body {
   font-face:Comic Sans MS;
+  text-align:center;
 }
 ul.navbar {
   height:20%;
@@ -19,12 +20,8 @@ a {
 h1 [
   text-align:center:
   text-size:45px;
-  font-family:Comic Sans MS;
 }
 iframe {
   height:400px;
   width:400px;
-}
-body {
-  text-align:center
 }
