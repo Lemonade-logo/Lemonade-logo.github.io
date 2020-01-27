@@ -2,13 +2,6 @@ body {
   font-face:Comic Sans MS;
   text-align:center;
 }
-ul.navbar {
-  height:20%;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  background-color:red;
-}
 li {
   float:left;
 }
